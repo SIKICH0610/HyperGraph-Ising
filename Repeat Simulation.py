@@ -6,13 +6,13 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger()
 
-num_nodes_list = list(range(20, 301, 10))  # Graph sizes from 20 to 300 in steps of 20
+num_nodes_list = list(range(20, 501, 10))
 node_degree = 2  # Degree of each node
 edge_size = 5    # Size of each hyperedge
 beta = 0.5  # Interaction strength
 h = 0.0    # External magnetic field
 max_steps = 20000  # Maximum number of steps for Glauber dynamics
-num_simulations = 3  # Number of simulations per graph size
+num_simulations = 2  # Number of simulations per graph size
 
 results = []
 

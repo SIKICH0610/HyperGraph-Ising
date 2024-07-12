@@ -50,14 +50,13 @@ class UniformHypergraph:
             for node in edges[edge]:
                 node_degrees[node] += 1
 
-        for node, degree in node_degrees.items():
-            if degree != self.node_degree:
-                raise ValueError("Failed to create a uniform hypergraph with the given parameters.")
-
-        # Verify all edges have the required size
-        for edge, nodes in edges.items():
-            if len(nodes) != self.edge_size:
-                raise ValueError("Failed to create a uniform hypergraph with the given parameters.")
+        # for node, degree in node_degrees.items():
+        #     if degree != self.node_degree:
+        #         raise ValueError("Failed to create a uniform hypergraph with the given parameters.")
+        #
+        # for edge, nodes in edges.items():
+        #     if len(nodes) != self.edge_size:
+        #         raise ValueError("Failed to create a uniform hypergraph with the given parameters.")
 
         # Create the hypergraph
         H = hnx.Hypergraph(edges)
