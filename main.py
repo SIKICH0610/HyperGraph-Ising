@@ -3,6 +3,7 @@ import random
 import math
 from collections import defaultdict
 import matplotlib.pyplot as plt
+import numpy as np
 
 class UniformHypergraph:
     def __init__(self, num_nodes, node_degree, edge_size, beta, h):
@@ -91,8 +92,9 @@ class UniformHypergraph:
 
     def glauber_dynamics(self, max_steps, energy_repeat_threshold=-1):
         self.energy_history = []
-        energy_count = defaultdict(int)
-
+        num_repeated_terms = 0
+        last_energy = 0
+        epsilon = 1e-6
         for step in range(max_steps):
             node = random.choice(list(self.hypergraph.nodes))
             delta_energy = -2 * self.get_hamiltonian(node)
@@ -101,14 +103,20 @@ class UniformHypergraph:
                 self.node_values[node] *= -1
             current_energy = self.total_energy()
             self.energy_history.append(current_energy)
-            energy_count[current_energy] += 1
+            if np.linalg.norm(last_energy - current_energy) < epsilon:
+                num_repeated_terms += 1
+            # Reset the number of repeated terms to 0
+            else:
+                num_repeated_terms = 0
 
             # Check if energy_repeat_threshold is set to -1
             if energy_repeat_threshold != -1:
                 # Check if any energy value has appeared more than the threshold
-                if energy_count[current_energy] > energy_repeat_threshold:
-                    print(f"Energy {current_energy} has appeared more than {energy_repeat_threshold} times. Terminating early.")
+                if num_repeated_terms > energy_repeat_threshold:
+                    print(
+                        f"Energy {current_energy} has appeared more than {energy_repeat_threshold} times. Terminating early.")
                     break
+            last_energy = current_energy
 
             if step % 100 == 0:  # Print progress every 100 steps
                 print(f'Step {step}, Total Energy: {self.energy_history[-1]}')
@@ -134,7 +142,7 @@ class UniformHypergraph:
     def __str__(self):
         return f'Edges: {self.hypergraph.edges}\nNodes: {self.hypergraph.nodes}\nNode Values: {self.node_values}'
 
-# # Simulation parameters
+# Simulation parameters
 # num_nodes_list = list(range(20, 501, 10))
 # node_degree = 2  # Degree of each node
 # edge_size = 4    # Size of each hyperedge
@@ -146,7 +154,7 @@ class UniformHypergraph:
 # for num_nodes in num_nodes_list:
 #     print(f"Running simulation for graph size: {num_nodes}")
 #     uhg = UniformHypergraph(num_nodes, node_degree, edge_size, beta, h)
-#     uhg.glauber_dynamics(max_steps, energy_repeat_threshold=300)
+#     uhg.glauber_dynamics(max_steps, energy_repeat_threshold=50)
 #     min_step, min_energy = uhg.find_lowest_energy_step()
 #     mixing_times.append((num_nodes, min_step))
 #     print(f"Graph size: {num_nodes}, Mixing time (steps to lowest energy): {min_step}")

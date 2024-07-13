@@ -12,7 +12,7 @@ edge_size = 5    # Size of each hyperedge
 beta = 0.5  # Interaction strength
 h = 0.0    # External magnetic field
 max_steps = 20000  # Maximum number of steps for Glauber dynamics
-num_simulations = 2  # Number of simulations per graph size
+num_simulations = 5  # Number of simulations per graph size
 
 results = []
 
@@ -21,7 +21,7 @@ for num_nodes in num_nodes_list:
     for sim in range(num_simulations):
         logger.info(f"Running simulation {sim+1}/{num_simulations} for graph size: {num_nodes}")
         uhg = UniformHypergraph(num_nodes, node_degree, edge_size, beta, h)
-        uhg.glauber_dynamics(max_steps, energy_repeat_threshold=100)
+        uhg.glauber_dynamics(max_steps, energy_repeat_threshold=50)
         min_step, min_energy = uhg.find_lowest_energy_step()
         results.append((num_nodes, sim+1, min_step))
         logger.info(f"Graph size: {num_nodes}, Simulation: {sim+1}, Mixing time (steps to lowest energy): {min_step}")
