@@ -214,19 +214,19 @@ class UniformHypergraph:
         return f'Edges: {self.hypergraph.edges}\nNodes: {self.hypergraph.nodes}\nNode Values: {self.node_values}'
 
 
-# Simulation parameters
-num_nodes_list = list(range(20, 501, 10))
-node_degree = 2  # Degree of each node
-edge_size = 4    # Size of each hyperedge
-beta_values = [1.5, 0.75, 0.5, 0.25]  # Interaction strengths
-h = 0   # External magnetic field
-max_steps = 15000  # Maximum number of steps for Glauber dynamics
-energy_repeat_threshold = 50  # Threshold for repeated energy termination
-
-# Create an instance of UniformHypergraph with any initial parameters (they will be overridden in the loop)
-uhg = UniformHypergraph(10, node_degree, edge_size)
-
-# Plot the mixing times for both beta values
-plt.figure(figsize=(10, 10))
-uhg.plot_mixing_times(num_nodes_list, beta_values, h, max_steps, energy_repeat_threshold, plt)
-plt.show()
+# # Simulation parameters
+# num_nodes_list = list(range(20, 501, 10))
+# node_degree = 2  # Degree of each node
+# edge_size = 4    # Size of each hyperedge
+# beta_values = [1.5, 0.75, 0.5, 0.25]  # Interaction strengths
+# h = 0   # External magnetic field
+# max_steps = 15000  # Maximum number of steps for Glauber dynamics
+# energy_repeat_threshold = 50  # Threshold for repeated energy termination
+#
+# # Create an instance of UniformHypergraph with any initial parameters (they will be overridden in the loop)
+# uhg = UniformHypergraph(10, node_degree, edge_size)
+#
+# # Plot the mixing times for both beta values
+# plt.figure(figsize=(10, 10))
+# uhg.plot_mixing_times(num_nodes_list, beta_values, h, max_steps, energy_repeat_threshold, plt)
+# plt.show()
